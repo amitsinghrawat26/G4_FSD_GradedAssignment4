@@ -23,10 +23,11 @@ public class EmployeeController {
 	@GetMapping("/employees")
 	public List<Employee> findAllEmployee(){
 		log.info("EmployeeController findAllEmployee()");
+		
 		return employeeService.findAll();
 	}
 	
-	@PostMapping("")
+	@PostMapping("/saveEmployee")
 	public void saveEmployee(Employee newEmployee) {
 		log.info("EmployeeController findAllEmployee()");
 		employeeService.save(newEmployee);

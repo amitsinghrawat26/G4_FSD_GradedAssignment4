@@ -2,6 +2,7 @@ package com.greatlearning.EmployeeManagementApplicationSecurity.Service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.greatlearning.EmployeeManagementApplicationSecurity.Entity.Employee;
@@ -14,10 +15,11 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class EmployeeService {
 	
+	@Autowired
 	public EmployeeRepository employeeRepository;
 	
 	public List<Employee> findAll(){
-		log.info("EmployeeService findAll()");
+		log.info("EmployeeService findAll()"+employeeRepository.findAll());
 		return employeeRepository.findAll();
 	}
 	
