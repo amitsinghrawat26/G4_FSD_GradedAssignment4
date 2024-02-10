@@ -1,3 +1,8 @@
+Employee Management Rest API based Web application, where we have developed CRUD(Create,Read,Update and Delete) functionality along with Sorting and some concepts of security.
+
+This Rest API is secure and have different endpoints for different operations
+
+
 #Run the before running the Application
 Create database ems;
 
