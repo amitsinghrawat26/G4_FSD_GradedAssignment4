@@ -6,27 +6,32 @@ import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import com.greatlearning.EmployeeManagementApplicationSecurity.Entity.Role;
 import com.greatlearning.EmployeeManagementApplicationSecurity.Entity.User;
 
-public class MyUserDetails implements UserDetails{
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+public class MyUserDetails implements org.springframework.security.core.userdetails.UserDetails{
 
 	private User user;
-	
+
 	public MyUserDetails(User user) {
 		super();
+		log.info("MyUserDetails user : "+ user.getId() +"  :  "+ user.getUsername()  +"  :  "+  user.getPassword());
+
 		this.user = user;
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
+		
 		List<Role> roles = user.getRoles();
 		List<SimpleGrantedAuthority> authorities = new ArrayList<>();
 		
 		for(Role role : roles) {
+			log.info("getAuthorities() role.getName() : "+role.getName()+"  role.getName() : "+role.getName());
 			authorities.add(new SimpleGrantedAuthority(role.getName()));
 		}
 		return authorities;
@@ -35,37 +40,41 @@ public class MyUserDetails implements UserDetails{
 	@Override
 	public String getPassword() {
 		// TODO Auto-generated method stub
-		return null;
+		log.info("MyUserDetails getPassword()");
+		return user.getPassword();
 	}
 
 	@Override
 	public String getUsername() {
 		// TODO Auto-generated method stub
-		return null;
+		log.info("MyUserDetails getUsername()");
+
+		return user.getUsername();
 	}
 
 	@Override
 	public boolean isAccountNonExpired() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
-
+	
+	
 }

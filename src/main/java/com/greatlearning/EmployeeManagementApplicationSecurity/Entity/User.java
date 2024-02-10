@@ -14,9 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
-import lombok.Data;
-
-@Entity	
+@Entity
 public class User {
 	
 	@Id
@@ -66,5 +64,6 @@ public class User {
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
-
+	
+	
 }

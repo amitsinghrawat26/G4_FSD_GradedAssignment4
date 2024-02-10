@@ -8,18 +8,20 @@ import javax.persistence.Id;
 
 @Entity
 public class Role {
-
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "role_id")
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@Column(name="role_id")
 	private int id;
 	
+	@Column(name="role_name")
 	private String name;
 
+	
 	public Role() {
 		super();
 	}
-	
+
 	public Role(int id, String name) {
 		super();
 		this.id = id;
@@ -41,6 +43,5 @@ public class Role {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
 	
 }

@@ -25,7 +25,7 @@ public class EmployeeController {
 	@Autowired
 	EmployeeService employeeService;
 
-	@GetMapping("/employees/employeeList")
+	@GetMapping("employees/employeeList")
 	public String findAllEmployee(Model model){
 		log.info("EmployeeController findAllEmployee()");
 		List<Employee> employees = employeeService.findAll();
@@ -62,10 +62,10 @@ public class EmployeeController {
 
 	@GetMapping("/employee/showFormForUpdate")
 	public String showFormForUpdate(@RequestParam("id") int id,Model model){
-		log.info("EmployeeController showFormForUpdate()");
+		log.info("EmployeeController showFormForUpdate() id"+id);
 
 		Employee updatedEmployee = employeeService.findById(id);
-		model.addAttribute("employee", updatedEmployee);
+		model.addAttribute("Employee", updatedEmployee);
 		return "Employee-form";
 	}
 	
