@@ -45,5 +45,10 @@ public class EmployeeService {
 		log.info("EmployeeService delete(Integer Int)");
 		employeeRepository.deleteById(id);
 	}
+	
+	public List<Employee> searchEmployee(String firstName){
+		log.info("EmployeeService searchEmployee(String name)");
+		return employeeRepository.findByFirstNameContainsAllIgnoreCase(firstName);
+	}
 
 }

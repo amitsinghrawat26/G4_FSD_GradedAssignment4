@@ -33,10 +33,14 @@
 			<!-- Add a button -->
 			<a href="/employee/showFormForAdd"
 				class="btn btn-primary btn-sm mb-3"> Add Employee </a> 
+				
+				<input type="search" name="name" placeholder="Employee Name"
+					class="form-control-sm ml-5 mr-2 mb-3" /> 
+				<button type="submit" class="btn btn-success btn-sm mb-3">Search</button>
+					
+	
 			<a href="/logout" 
 					class="btn btn-primary btn-sm mb-3 mx-auto" style="text-align: left;"> Logout </a> 
-
-
 
 		</form>
 

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.greatlearning.EmployeeManagementApplicationSecurity.Entity.Employee;
@@ -70,11 +69,26 @@ public class EmployeeController {
 	}
 	
 	@GetMapping("/employee/delete")
-	public String DeleteEmployeeById(@RequestParam("id") int id)
+	public String deleteEmployeeById(@RequestParam("id") int id)
 	{
 		log.info("EmployeeController DeleteEmployeeById()");
 		employeeService.delete(id);
 		return "redirect:/employees/employeeList";
+	}
+	
+	@GetMapping("/employee/search")
+	public String searchEmployeeByName(@RequestParam("name") String name,Model model)
+	{
+		log.info("EmployeeController searchEmployeeByName()");
+		
+		if(name.trim().isEmpty()) {
+			return "redirect:/employees/employeeList";
+		}
+		else {
+			List<Employee> theEmployees = employeeService.searchEmployee(name);
+			model.addAttribute("Employee", theEmployees);
+			return "List-employee";
+		}
 	}
 
 	@RequestMapping("/403")
