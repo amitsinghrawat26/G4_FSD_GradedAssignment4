@@ -13,11 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-<<<<<<< HEAD
-=======
-
-import lombok.Data;
->>>>>>> master
 
 @Entity
 public class User {
@@ -33,15 +28,9 @@ public class User {
 	
 	@ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 	@JoinTable(
-<<<<<<< HEAD
 			name = "users_roles",
 			joinColumns = @JoinColumn(name = "user_id"),
 			inverseJoinColumns = @JoinColumn(name = "role_id"))
-=======
-		name = "user_roles",
-		joinColumns = @JoinColumn(name="user_id"),
-		inverseJoinColumns = @JoinColumn(name="role_id"))
->>>>>>> master
 	private List<Role> roles = new ArrayList<>();
 
 	public int getId() {

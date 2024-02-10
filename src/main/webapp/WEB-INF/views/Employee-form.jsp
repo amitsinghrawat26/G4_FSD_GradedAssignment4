@@ -59,9 +59,5 @@
 	</div>
 </body>
 
-<<<<<<< HEAD
 </html>
 
-=======
-</html>
->>>>>>> master
