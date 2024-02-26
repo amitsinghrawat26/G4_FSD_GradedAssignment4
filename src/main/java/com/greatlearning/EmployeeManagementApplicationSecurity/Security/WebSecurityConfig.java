@@ -53,18 +53,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception{
 		log.info("WebSecurityConfig configure(HttpSecurity http)");
 
-		http.authorizeRequests()
-		.antMatchers("/","/403","/employees/employeeList","/employee/save","/employee/showFormForAdd").hasAnyAuthority("USER","ADMIN")
-		.antMatchers("/employee/showsFromForUpdate","/employee/delete").hasAnyAuthority("ADMIN")
-		.anyRequest().authenticated()
-		.and()
-		.formLogin().loginProcessingUrl("/login").successForwardUrl("/employees/employeeList").defaultSuccessUrl("/employees/employeeList").permitAll()
-		.and()
-		.logout().logoutSuccessUrl("/login").permitAll()
-		.and()
-		.exceptionHandling().accessDeniedPage("/403")
-		.and()
-		.cors().and().csrf().disable();
+		 http  
+	        .antMatcher("/")                                 
+	        .authorizeRequests()  
+	            .anyRequest().hasRole("ADMIN")  
+	            .and()  
+	        .httpBasic();  
+		 
+//		http.authorizeRequests()
+//		.antMatchers("/","/403","/employees/employeeList","/employee/save","/employee/showFormForAdd").hasAnyAuthority("USER","ADMIN")
+//		.antMatchers("/**","/employee/showsFromForUpdate","/employee/delete").hasAnyAuthority("ADMIN")
+//		.anyRequest().authenticated()
+//		.and()
+//		.formLogin().loginProcessingUrl("/login").successForwardUrl("/employees/employeeList").defaultSuccessUrl("/employees/employeeList").permitAll()
+//		.and()
+//		.logout().logoutSuccessUrl("/login").permitAll()
+//		.and()
+//		.exceptionHandling().accessDeniedPage("/403")
+//		.and()
+//		.cors().and().csrf().disable();
 	}
 	
 }

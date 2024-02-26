@@ -4,12 +4,13 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.greatlearning.EmployeeManagementApplicationSecurity.Entity.Employee;
@@ -18,92 +19,70 @@ import com.greatlearning.EmployeeManagementApplicationSecurity.Service.EmployeeS
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Controller
+@RestController
+@RequestMapping("/ems")
 public class EmployeeController {
 
 	@Autowired
 	EmployeeService employeeService;
 
-	@GetMapping("employees/employeeList")
-	public String findAllEmployee(Model model){
-		log.info("EmployeeController findAllEmployee()");
-		List<Employee> employees = employeeService.findAll();
-		model.addAttribute("Employee", employees);
-		return "List-employee";
+	@GetMapping("/getAllEmployee")
+	public List<Employee> getAllEmployee() {
+		log.info("EmployeeController getAllEmployee()");
+		return employeeService.findAll();
 	}
 
-	@GetMapping("/employee/showFormForAdd")
-	public String showFormForAdd(Model model) {
+	@PostMapping("/createEmployee")
+	public String createEmployee(Employee employee) {
 		log.info("EmployeeController showFormForAdd()");
-		Employee newEmployee = new Employee();
-		model.addAttribute("Employee", newEmployee);
-		employeeService.save(newEmployee);
-		return "Employee-form";
+		Employee newEmployee = employee;
+		return employeeService.save(newEmployee);
 	}
 
-	@PostMapping("/employee/save")
-	public String save(@RequestParam("id") int id,@RequestParam("firstName") String firstName,
-			@RequestParam("lastName") String lastName,@RequestParam("email") String email) {
-		log.info("EmployeeController save()");
+	@PostMapping("/updateEmployee")
+	public String updateEmployee(Employee employee) {
+		log.info("EmployeeController updateEmployee() : "+employee);
 		Employee newEmployee;
-		if(id!=0) {
-			newEmployee = employeeService.findById(id);
-			newEmployee.setFirstName(firstName);
-			newEmployee.setLastName(lastName);
-			newEmployee.setEmail(email);
-		}
-		else {
-			newEmployee = new Employee(id,firstName,lastName,email);
-		}
-		employeeService.save(newEmployee);
-		return "redirect:/employees/employeeList";
+		if (employee.getId() != 0) {
+			newEmployee = employeeService.findById(employee.getId());
+			newEmployee.setFirstName(employee.getFirstName());
+			newEmployee.setLastName(employee.getLastName());
+			newEmployee.setEmail(employee.getEmail());
+		} else {
+			newEmployee = new Employee(employee.getId(), employee.getFirstName(), employee.getLastName(), employee.getEmail());
+		}	
+		return employeeService.save(newEmployee);
 	}
 
-	@GetMapping("/employee/showFormForUpdate")
-	public String showFormForUpdate(@RequestParam("id") int id,Model model){
-		log.info("EmployeeController showFormForUpdate() id"+id);
-
-		Employee updatedEmployee = employeeService.findById(id);
-		model.addAttribute("Employee", updatedEmployee);
-		return "Employee-form";
+	@GetMapping("/sortEmployeeByName")
+	public List<Employee> sortEmployeeByName()
+	{
+		log.info("EmployeeController sortEmployeeByName()");	
+		List<Employee> theEmployees = employeeService.sortEmployeeByName();
+		return theEmployees;
 	}
 	
-	@GetMapping("/employee/delete")
-	public String deleteEmployeeById(@RequestParam("id") int id)
-	{
+	@DeleteMapping("/deleteEmployeeById")
+	public String deleteEmployeeById(int id) {
 		log.info("EmployeeController DeleteEmployeeById()");
-		employeeService.delete(id);
-		return "redirect:/employees/employeeList";
+		return employeeService.delete(id);
 	}
-	
-	@GetMapping("/employee/search")
-	public String searchEmployeeByName(@RequestParam("name") String name,Model model)
-	{
+
+	@GetMapping("/searchEmployeeByName")
+	public List<Employee> searchEmployeeByName(String name) {
 		log.info("EmployeeController searchEmployeeByName()");
-		
-		if(name.trim().isEmpty()) {
-			return "redirect:/employees/employeeList";
-		}
-		else {
-			List<Employee> theEmployees = employeeService.searchEmployee(name);
-			model.addAttribute("Employee", theEmployees);
-			return "List-employee";
-		}
+		return employeeService.searchEmployee(name);
 	}
 
 	@RequestMapping("/403")
-	public ModelAndView accessDenied(Principal user) {
+	public String accessDenied(Principal user) {
 		log.info("EmployeeController accessDenied()");
-		ModelAndView model = new ModelAndView();
 
-		if(user != null) {
-			model.addObject("msg","Hi "+user.getName()+", you don't have permission to this page!!!");
+		if (user != null) {
+			return "msg" + "Hi " + user.getName() + ", you don't have permission to this page!!!";
+		} else {
+			return "msg" + "you don't have permission to this page!!!";
 		}
-		else {
-			model.addObject("msg", "you don't have permission to this page!!!");
-		}
-
-		return model;
 	}
 
 }
