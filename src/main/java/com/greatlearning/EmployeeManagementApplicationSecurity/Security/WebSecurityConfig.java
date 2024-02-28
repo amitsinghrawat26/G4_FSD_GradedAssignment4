@@ -2,6 +2,7 @@ package com.greatlearning.EmployeeManagementApplicationSecurity.Security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -53,25 +54,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception{
 		log.info("WebSecurityConfig configure(HttpSecurity http)");
 
-		 http  
+		 http	 
 	        .antMatcher("/")                                 
-	        .authorizeRequests()  
+	        .authorizeRequests()
 	            .anyRequest().hasRole("ADMIN")  
 	            .and()  
 	        .httpBasic();  
 		 
-//		http.authorizeRequests()
-//		.antMatchers("/","/403","/employees/employeeList","/employee/save","/employee/showFormForAdd").hasAnyAuthority("USER","ADMIN")
-//		.antMatchers("/**","/employee/showsFromForUpdate","/employee/delete").hasAnyAuthority("ADMIN")
-//		.anyRequest().authenticated()
-//		.and()
-//		.formLogin().loginProcessingUrl("/login").successForwardUrl("/employees/employeeList").defaultSuccessUrl("/employees/employeeList").permitAll()
-//		.and()
-//		.logout().logoutSuccessUrl("/login").permitAll()
-//		.and()
-//		.exceptionHandling().accessDeniedPage("/403")
-//		.and()
-//		.cors().and().csrf().disable();
+//		 .authorizeHttpRequests()
+//		 .antMatchers(HttpMethod.GET, "/").hasAnyAuthority("ADMIN","USER")
+//		 .antMatchers(HttpMethod.POST, "/").hasAuthority("ADMIN")
+//		 .antMatchers(HttpMethod.DELETE, "/").hasAuthority("ADMIN")
+//		 .anyRequest().permitAll()
+//		 .and()
+//		 .httpBasic();
 	}
 	
 }

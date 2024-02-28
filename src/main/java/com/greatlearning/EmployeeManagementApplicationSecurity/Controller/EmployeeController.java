@@ -22,7 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/ems")
 public class EmployeeController {
-
 	@Autowired
 	EmployeeService employeeService;
 
@@ -41,7 +40,7 @@ public class EmployeeController {
 
 	@PostMapping("/updateEmployee")
 	public String updateEmployee(Employee employee) {
-		log.info("EmployeeController updateEmployee() : "+employee);
+		log.info("EmployeeController updateEmployee() : " + employee);
 		Employee newEmployee;
 		if (employee.getId() != 0) {
 			newEmployee = employeeService.findById(employee.getId());
@@ -49,19 +48,19 @@ public class EmployeeController {
 			newEmployee.setLastName(employee.getLastName());
 			newEmployee.setEmail(employee.getEmail());
 		} else {
-			newEmployee = new Employee(employee.getId(), employee.getFirstName(), employee.getLastName(), employee.getEmail());
-		}	
+			newEmployee = new Employee(employee.getId(), employee.getFirstName(), employee.getLastName(),
+					employee.getEmail());
+		}
 		return employeeService.save(newEmployee);
 	}
 
 	@GetMapping("/sortEmployeeByName")
-	public List<Employee> sortEmployeeByName()
-	{
-		log.info("EmployeeController sortEmployeeByName()");	
+	public List<Employee> sortEmployeeByName() {
+		log.info("EmployeeController sortEmployeeByName()");
 		List<Employee> theEmployees = employeeService.sortEmployeeByName();
 		return theEmployees;
 	}
-	
+
 	@DeleteMapping("/deleteEmployeeById")
 	public String deleteEmployeeById(int id) {
 		log.info("EmployeeController DeleteEmployeeById()");
@@ -75,14 +74,9 @@ public class EmployeeController {
 	}
 
 	@RequestMapping("/403")
-	public String accessDenied(Principal user) {
+	public String accessDenied() {
 		log.info("EmployeeController accessDenied()");
-
-		if (user != null) {
-			return "msg" + "Hi " + user.getName() + ", you don't have permission to this page!!!";
-		} else {
-			return "msg" + "you don't have permission to this page!!!";
-		}
+		return "msg" + "you don't have permission to this page!!!";
 	}
 
 }

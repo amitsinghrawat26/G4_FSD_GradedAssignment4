@@ -47,7 +47,7 @@ public class MyUserDetails implements org.springframework.security.core.userdeta
 	@Override
 	public String getUsername() {
 		// TODO Auto-generated method stub
-		log.info("MyUserDetails getUsername()");
+		log.info("MyUserDetails getUsername() user:"+user);
 
 		return user.getUsername();
 	}

@@ -24,7 +24,7 @@ public class UserController {
 	
 	@GetMapping("/getUserDetails")
 	public List<User> getUserDetails(){
-		log.info("UserController createUser()");
+		log.info("UserController getUserDetails()");
 		return userService.getUsers();
 	}
 	
